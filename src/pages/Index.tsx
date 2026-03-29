@@ -6,9 +6,10 @@ const VKIcon = () => (
   </svg>
 );
 
-const TelegramIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.93c-.12.57-.46.71-.93.44l-2.57-1.89-1.24 1.19c-.14.13-.25.25-.51.25l.18-2.6 4.73-4.27c.21-.18-.04-.28-.32-.1L7.28 14.6l-2.51-.78c-.55-.17-.56-.55.11-.81l9.82-3.79c.46-.17.86.11.94.58z"/>
+const MaxIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="6" fill="currentColor" fillOpacity="0.15"/>
+    <text x="12" y="16.5" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="9" fill="currentColor" letterSpacing="0.5">MAX</text>
   </svg>
 );
 
@@ -227,8 +228,8 @@ const Index = () => {
                 fontFamily: "'Golos Text', sans-serif",
               }}
             >
-              <TelegramIcon />
-              <span style={{ letterSpacing: "0.08em" }}>Telegram</span>
+              <MaxIcon />
+              <span style={{ letterSpacing: "0.08em" }}>MAX</span>
             </div>
           </div>
 
