@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const PHOTO = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/f10b804d-4231-46cd-8a77-1c572bc18fc9.jpg";
+const PHOTO = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/bucket/cac260a2-71b5-458d-92e4-560c968cdbb9.jpg";
 const CARDS_IMG = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/87a2fb55-a768-4800-9d79-50b71dc4b1c6.jpg";
 const GAME_IMG = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/d89e2bb5-1289-4aad-9e4e-634101e5e1b9.jpg";
 
@@ -34,6 +34,7 @@ const services = [
 const benefits = [
   { icon: "🎓", text: "Высшее психологическое образование" },
   { icon: "🏫", text: "20 лет опыта в школе и детском саду" },
+  { icon: "🧠", text: "20 лет опыта психологической работы" },
   { icon: "🌿", text: "Мягкий, бережный подход" },
   { icon: "🔒", text: "Полная конфиденциальность" },
 ];
