@@ -1,3 +1,6 @@
+import { useRef, useState } from "react";
+import html2canvas from "html2canvas";
+
 const BG_IMAGE = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/bd5850ca-455c-439d-a0d3-d8a6367272ae.jpg";
 
 const VKIcon = () => (
@@ -14,6 +17,30 @@ const MaxIcon = () => (
 );
 
 const Index = () => {
+  const coverRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleDownload = async () => {
+    if (!coverRef.current) return;
+    setLoading(true);
+    try {
+      const canvas = await html2canvas(coverRef.current, {
+        useCORS: true,
+        allowTaint: true,
+        scale: 1590 / coverRef.current.offsetWidth,
+        width: coverRef.current.offsetWidth,
+        height: coverRef.current.offsetHeight,
+        backgroundColor: null,
+      });
+      const link = document.createElement("a");
+      link.download = "обложка-вк-светлана-вознесенская.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       style={{
@@ -34,6 +61,7 @@ const Index = () => {
 
       {/* Обложка */}
       <div
+        ref={coverRef}
         style={{
           width: "100%",
           maxWidth: "1200px",
@@ -271,10 +299,47 @@ const Index = () => {
         />
       </div>
 
+      {/* Кнопка скачивания */}
+      <button
+        onClick={handleDownload}
+        disabled={loading}
+        style={{
+          marginTop: "28px",
+          padding: "14px 36px",
+          fontFamily: "'Golos Text', sans-serif",
+          fontWeight: 500,
+          fontSize: "15px",
+          letterSpacing: "0.06em",
+          color: "#fff",
+          background: loading
+            ? "rgba(120,80,200,0.4)"
+            : "linear-gradient(90deg, #7c3aed, #5b21b6)",
+          border: "none",
+          borderRadius: "8px",
+          cursor: loading ? "not-allowed" : "pointer",
+          boxShadow: "0 4px 20px rgba(120,60,200,0.35)",
+          transition: "opacity 0.2s",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        {loading ? (
+          <>
+            <span style={{ display: "inline-block", width: "16px", height: "16px", border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+            Сохраняем…
+          </>
+        ) : (
+          <>
+            ↓ Скачать обложку PNG
+          </>
+        )}
+      </button>
+
       {/* Подпись под обложкой */}
       <div
         style={{
-          marginTop: "20px",
+          marginTop: "16px",
           display: "flex",
           gap: "32px",
           color: "#aaa",
@@ -286,6 +351,8 @@ const Index = () => {
         <span>•</span>
         <span>Мобильный: центральная область 1198 × 400 px</span>
       </div>
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 };
