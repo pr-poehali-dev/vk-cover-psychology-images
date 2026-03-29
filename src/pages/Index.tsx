@@ -1,360 +1,328 @@
-import { useRef, useState } from "react";
-import html2canvas from "html2canvas";
+import { useState } from "react";
 
-const BG_IMAGE = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/bd5850ca-455c-439d-a0d3-d8a6367272ae.jpg";
+const PHOTO = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/f10b804d-4231-46cd-8a77-1c572bc18fc9.jpg";
+const CARDS_IMG = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/87a2fb55-a768-4800-9d79-50b71dc4b1c6.jpg";
+const GAME_IMG = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/d89e2bb5-1289-4aad-9e4e-634101e5e1b9.jpg";
 
-const VKIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.08 13.5h-1.5c-.57 0-.75-.46-1.77-1.5-.89-.87-1.27-.99-1.49-.99-.3 0-.39.08-.39.5v1.37c0 .36-.11.57-1.06.57-1.56 0-3.29-.95-4.51-2.7C5.72 10.6 5.25 8.8 5.25 8.43c0-.22.08-.43.5-.43h1.5c.37 0 .51.17.65.57.72 2.07 1.91 3.88 2.41 3.88.19 0 .27-.09.27-.57V9.82c-.06-1.02-.6-1.11-.6-1.47 0-.18.15-.36.38-.36h2.36c.32 0 .43.17.43.54v2.91c0 .32.14.43.23.43.19 0 .34-.11.68-.45 1.05-1.17 1.8-2.98 1.8-2.98.1-.22.27-.43.63-.43h1.5c.45 0 .55.23.45.54-.19.87-2.03 3.48-2.03 3.48-.16.26-.22.38 0 .67.16.22.69.68 1.04 1.09.65.74 1.14 1.36 1.27 1.79.13.42-.09.64-.52.64z"/>
-  </svg>
-);
+const WA_LINK = "https://wa.me/";
+const MAX_LINK = "https://max.ru/";
 
-const MaxIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <rect width="24" height="24" rx="6" fill="currentColor" fillOpacity="0.15"/>
-    <text x="12" y="16.5" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="9" fill="currentColor" letterSpacing="0.5">MAX</text>
-  </svg>
-);
+const services = [
+  {
+    icon: "🃏",
+    title: "МАК-консультирование",
+    desc: "Работа с метафорическими ассоциативными картами. Мягкий и глубокий способ исследовать внутренний мир, найти ресурсы и ответы на волнующие вопросы.",
+    img: CARDS_IMG,
+    tags: ["Индивидуально", "Онлайн / очно"],
+  },
+  {
+    icon: "🎲",
+    title: "Трансформационные игры",
+    desc: "Психологические настольные игры для глубокого самопознания. Групповой и индивидуальный формат. Безопасное пространство для изменений.",
+    img: GAME_IMG,
+    tags: ["Группа / индивидуально", "Онлайн / очно"],
+  },
+  {
+    icon: "💬",
+    title: "Психологическое консультирование",
+    desc: "Индивидуальные сессии для проработки тревоги, отношений, самооценки, жизненных изменений. 20 лет опыта работы с детьми и взрослыми.",
+    img: PHOTO,
+    tags: ["Индивидуально", "Онлайн / очно"],
+  },
+];
 
-const Index = () => {
-  const coverRef = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(false);
+const benefits = [
+  { icon: "🎓", text: "Высшее психологическое образование" },
+  { icon: "🏫", text: "20 лет опыта в школе и детском саду" },
+  { icon: "🌿", text: "Мягкий, бережный подход" },
+  { icon: "🔒", text: "Полная конфиденциальность" },
+];
 
-  const handleDownload = async () => {
-    if (!coverRef.current) return;
-    setLoading(true);
-    try {
-      const canvas = await html2canvas(coverRef.current, {
-        useCORS: true,
-        allowTaint: true,
-        scale: 1590 / coverRef.current.offsetWidth,
-        width: coverRef.current.offsetWidth,
-        height: coverRef.current.offsetHeight,
-        backgroundColor: null,
-      });
-      const link = document.createElement("a");
-      link.download = "обложка-вк-светлана-вознесенская.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    } finally {
-      setLoading(false);
-    }
+export default function Index() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #f0eaf6 0%, #e8f0f7 50%, #f5ede8 100%)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 20px",
-        fontFamily: "'Golos Text', sans-serif",
-      }}
-    >
-      {/* Превью обложки */}
-      <div style={{ marginBottom: "24px", color: "#888", fontSize: "13px", letterSpacing: "0.08em", fontFamily: "'Golos Text', sans-serif" }}>
-        ОБЛОЖКА ВКонтакте — 1590 × 530 px
-      </div>
+    <div style={{ fontFamily: "'Golos Text', sans-serif", color: "#1a0a2e", background: "#faf8ff" }}>
 
-      {/* Обложка */}
-      <div
-        ref={coverRef}
-        style={{
-          width: "100%",
-          maxWidth: "1200px",
-          aspectRatio: "1590 / 530",
-          position: "relative",
-          overflow: "hidden",
-          borderRadius: "12px",
-          boxShadow: "0 32px 80px rgba(80, 50, 120, 0.18), 0 8px 24px rgba(0,0,0,0.10)",
-        }}
-      >
-        {/* Фоновое изображение */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `url(${BG_IMAGE})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+      {/* ───── ШРИФТЫ ───── */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Golos+Text:wght@300;400;500;600&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        .btn-primary {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 14px 32px; border-radius: 8px; border: none; cursor: pointer;
+          font-family: 'Golos Text', sans-serif; font-size: 15px; font-weight: 500;
+          letter-spacing: 0.04em; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(120,60,200,0.3); }
+        .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; }
+        .btn-max { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: #fff; }
+        .btn-outline { background: transparent; border: 1.5px solid rgba(124,58,237,0.4); color: #7c3aed; }
+        .btn-outline:hover { background: rgba(124,58,237,0.06); }
+        .service-card { transition: transform 0.25s, box-shadow 0.25s; }
+        .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(80,30,120,0.14); }
+        @media (max-width: 768px) {
+          .hero-grid { flex-direction: column !important; }
+          .services-grid { grid-template-columns: 1fr !important; }
+          .about-grid { flex-direction: column !important; }
+          .hero-title { font-size: 38px !important; }
+        }
+      `}</style>
 
-        {/* Градиентный оверлей */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(105deg, rgba(58,30,90,0.72) 0%, rgba(58,30,90,0.35) 45%, rgba(20,10,40,0.18) 70%, transparent 100%)",
-          }}
-        />
+      {/* ───── ШАПКА ───── */}
+      <header style={{
+        position: "sticky", top: 0, zIndex: 100,
+        background: "rgba(250,248,255,0.92)", backdropFilter: "blur(12px)",
+        borderBottom: "1px solid rgba(124,58,237,0.1)",
+        padding: "0 24px",
+      }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{
+              width: 36, height: 36, borderRadius: "50%",
+              background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic",
+              fontSize: 14, color: "#fff", fontWeight: 600,
+            }}>СВ</div>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, fontWeight: 600, color: "#3b0764" }}>
+              Светлана Вознесенская
+            </span>
+          </div>
+          <nav style={{ display: "flex", gap: 28, alignItems: "center" }}>
+            {[["Обо мне", "about"], ["Услуги", "services"], ["Запись", "contact"]].map(([label, id]) => (
+              <button key={id} onClick={() => scrollTo(id)} style={{
+                background: "none", border: "none", cursor: "pointer",
+                fontFamily: "'Golos Text', sans-serif", fontSize: 14, color: "#4c1d95",
+                fontWeight: 400, letterSpacing: "0.04em",
+              }}>{label}</button>
+            ))}
+            <button className="btn-primary btn-max" style={{ padding: "8px 20px", fontSize: 13 }} onClick={() => scrollTo("contact")}>
+              Записаться
+            </button>
+          </nav>
+        </div>
+      </header>
 
-        {/* Нижний градиент */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "55%",
-            background:
-              "linear-gradient(to top, rgba(25,10,50,0.75) 0%, rgba(25,10,50,0.3) 60%, transparent 100%)",
-          }}
-        />
+      {/* ───── HERO ───── */}
+      <section style={{
+        background: "linear-gradient(135deg, #1a0a2e 0%, #3b0764 50%, #1e1040 100%)",
+        padding: "80px 24px 60px",
+        position: "relative", overflow: "hidden",
+      }}>
+        {/* Декор */}
+        <div style={{ position: "absolute", top: -80, right: -80, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -60, left: "30%", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,210,80,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-        {/* Декоративная линия-акцент */}
-        <div
-          style={{
-            position: "absolute",
-            left: "6%",
-            top: "18%",
-            bottom: "18%",
-            width: "2px",
-            background: "linear-gradient(to bottom, transparent, rgba(255,210,80,0.7), transparent)",
-          }}
-        />
-
-        {/* Левый блок: заголовок */}
-        <div
-          style={{
-            position: "absolute",
-            left: "9%",
-            top: "50%",
-            transform: "translateY(-50%)",
-            maxWidth: "52%",
-          }}
-        >
-          {/* Надпись сверху */}
-          <div
-            style={{
-              fontFamily: "'Golos Text', sans-serif",
-              fontWeight: 300,
-              fontSize: "clamp(9px, 1.1vw, 14px)",
-              letterSpacing: "0.25em",
-              color: "rgba(255,218,80,0.9)",
-              textTransform: "uppercase",
-              marginBottom: "10px",
-            }}
-          >
-            Психолог Светлана Вознесенская
+        <div className="hero-grid" style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", gap: 60 }}>
+          {/* Текст */}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 13, letterSpacing: "0.25em", color: "rgba(255,218,80,0.9)", textTransform: "uppercase", marginBottom: 20 }}>
+              Психолог • МАК-консультант
+            </div>
+            <h1 className="hero-title" style={{
+              fontFamily: "'Cormorant Garamond', serif", fontWeight: 400,
+              fontSize: 52, lineHeight: 1.15, color: "#fff", marginBottom: 16,
+            }}>
+              Психология<br />
+              <span style={{ fontStyle: "italic", color: "rgba(216,180,254,0.95)" }}>через образы</span>
+            </h1>
+            <p style={{ fontSize: 16, lineHeight: 1.7, color: "rgba(220,200,255,0.8)", marginBottom: 36, maxWidth: 480 }}>
+              Мягкий и глубокий путь к себе с помощью МАК-карт и трансформационных игр. 20 лет опыта работы с людьми разного возраста.
+            </p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <a href={WA_LINK} target="_blank" rel="noreferrer" className="btn-primary btn-wa">
+                <span>💬</span> WhatsApp
+              </a>
+              <a href={MAX_LINK} target="_blank" rel="noreferrer" className="btn-primary btn-max">
+                <span>📱</span> MAX
+              </a>
+            </div>
           </div>
 
-          {/* Главный заголовок */}
-          <h1
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 400,
-              fontStyle: "italic",
-              fontSize: "clamp(18px, 3.4vw, 48px)",
-              lineHeight: 1.15,
-              color: "#ffffff",
-              margin: "0 0 12px 0",
-              textShadow: "0 2px 20px rgba(80,30,120,0.4)",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Психология<br />
-            <span style={{ fontWeight: 600, fontStyle: "normal" }}>через образы</span>
-          </h1>
+          {/* Фото */}
+          <div style={{ flexShrink: 0, position: "relative" }}>
+            <div style={{
+              width: 280, height: 340,
+              borderRadius: "40% 60% 55% 45% / 50% 45% 55% 50%",
+              overflow: "hidden",
+              border: "3px solid rgba(216,180,254,0.3)",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.4), 0 0 0 12px rgba(124,58,237,0.1)",
+            }}>
+              <img src={PHOTO} alt="Светлана Вознесенская" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+            <div style={{
+              position: "absolute", bottom: -12, right: -12,
+              background: "linear-gradient(135deg, rgba(200,150,20,0.85), rgba(160,110,0,0.75))",
+              backdropFilter: "blur(8px)", border: "1px solid rgba(255,218,80,0.3)",
+              borderRadius: 12, padding: "10px 16px", color: "#fff",
+              fontFamily: "'Golos Text', sans-serif", fontSize: 13, fontWeight: 500,
+            }}>
+              🏆 20 лет опыта
+            </div>
+          </div>
+        </div>
+      </section>
 
-          {/* Подзаголовок */}
-          <div
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 300,
-              fontSize: "clamp(12px, 1.8vw, 24px)",
-              color: "rgba(230,215,255,0.9)",
-              marginBottom: "18px",
-              letterSpacing: "0.04em",
-            }}
-          >
-            МАК-карты
+      {/* ───── ОБО МНЕ ───── */}
+      <section id="about" style={{ padding: "80px 24px", background: "#fff" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <div style={{ fontSize: 12, letterSpacing: "0.2em", color: "#a855f7", textTransform: "uppercase", marginBottom: 12 }}>Знакомство</div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 400, color: "#3b0764" }}>
+              Обо мне
+            </h2>
           </div>
 
-          {/* Теги */}
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
-            {["МАК-карты", "Психология", "Самопознание"].map((tag) => (
-              <span
-                key={tag}
-                style={{
-                  fontFamily: "'Golos Text', sans-serif",
-                  fontSize: "clamp(7px, 0.85vw, 11px)",
-                  fontWeight: 400,
-                  letterSpacing: "0.12em",
-                  color: "rgba(220,200,255,0.85)",
-                  border: "1px solid rgba(180,150,255,0.35)",
-                  borderRadius: "20px",
-                  padding: "3px 10px",
-                  backdropFilter: "blur(4px)",
-                  background: "rgba(120,60,200,0.15)",
-                }}
-              >
-                {tag}
-              </span>
+          <div className="about-grid" style={{ display: "flex", gap: 60, alignItems: "center" }}>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 17, lineHeight: 1.8, color: "#4a3060", marginBottom: 24 }}>
+                Меня зовут <strong>Светлана Вознесенская</strong> — психолог с высшим психологическим образованием и 20-летним опытом работы педагогом-психологом в школе и детском саду.
+              </p>
+              <p style={{ fontSize: 16, lineHeight: 1.8, color: "#6b5080", marginBottom: 36 }}>
+                В своей практике я использую <strong>МАК-консультирование</strong> и <strong>психологические трансформационные игры</strong> — инструменты, которые помогают мягко, но глубоко исследовать себя, найти внутренние ресурсы и прийти к изменениям.
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                {benefits.map((b) => (
+                  <div key={b.text} style={{
+                    display: "flex", alignItems: "flex-start", gap: 12,
+                    padding: "16px 18px", borderRadius: 12,
+                    background: "linear-gradient(135deg, #faf5ff, #f5f0ff)",
+                    border: "1px solid rgba(124,58,237,0.1)",
+                  }}>
+                    <span style={{ fontSize: 22 }}>{b.icon}</span>
+                    <span style={{ fontSize: 14, lineHeight: 1.5, color: "#4c1d95", fontWeight: 400 }}>{b.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ flexShrink: 0 }}>
+              <div style={{
+                width: 260, height: 320, borderRadius: 24, overflow: "hidden",
+                boxShadow: "0 20px 50px rgba(80,30,120,0.18)",
+                border: "1px solid rgba(124,58,237,0.15)",
+              }}>
+                <img src={CARDS_IMG} alt="МАК-карты" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ───── УСЛУГИ ───── */}
+      <section id="services" style={{ padding: "80px 24px", background: "linear-gradient(135deg, #faf5ff 0%, #f5f0ff 100%)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <div style={{ fontSize: 12, letterSpacing: "0.2em", color: "#a855f7", textTransform: "uppercase", marginBottom: 12 }}>Чем я могу помочь</div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 400, color: "#3b0764" }}>
+              Услуги
+            </h2>
+          </div>
+
+          <div className="services-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+            {services.map((s) => (
+              <div key={s.title} className="service-card" style={{
+                background: "#fff", borderRadius: 20, overflow: "hidden",
+                border: "1px solid rgba(124,58,237,0.1)",
+                boxShadow: "0 4px 20px rgba(80,30,120,0.07)",
+              }}>
+                <div style={{ height: 180, overflow: "hidden" }}>
+                  <img src={s.img} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+                <div style={{ padding: "24px 24px 28px" }}>
+                  <div style={{ fontSize: 28, marginBottom: 12 }}>{s.icon}</div>
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 600, color: "#3b0764", marginBottom: 10 }}>
+                    {s.title}
+                  </h3>
+                  <p style={{ fontSize: 14, lineHeight: 1.7, color: "#6b5080", marginBottom: 16 }}>{s.desc}</p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    {s.tags.map((tag) => (
+                      <span key={tag} style={{
+                        fontSize: 12, padding: "4px 12px", borderRadius: 20,
+                        background: "rgba(124,58,237,0.08)", color: "#7c3aed",
+                        border: "1px solid rgba(124,58,237,0.15)", fontWeight: 400,
+                      }}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* Призыв к действию */}
-          <div
-            style={{
-              fontFamily: "'Golos Text', sans-serif",
-              fontWeight: 500,
-              fontSize: "clamp(8px, 1vw, 13px)",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "#fff",
-              background: "linear-gradient(90deg, rgba(200,150,20,0.75), rgba(160,110,0,0.65))",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,218,80,0.4)",
-              borderRadius: "4px",
-              padding: "7px 16px",
-              display: "inline-block",
-            }}
-          >
-            Изучаем себя вместе
+          <div style={{ textAlign: "center", marginTop: 16 }}>
+            <p style={{ color: "#9060b0", fontSize: 14, fontStyle: "italic" }}>Стоимость — по договорённости. Напишите, и мы обсудим детали.</p>
           </div>
         </div>
+      </section>
 
-        {/* Нижний бар */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "7%",
-            left: "9%",
-            right: "6%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* Иконки соцсетей */}
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                color: "rgba(220,200,255,0.8)",
-                fontSize: "clamp(6px, 0.75vw, 10px)",
-                fontFamily: "'Golos Text', sans-serif",
-              }}
-            >
-              <VKIcon />
-              <span style={{ letterSpacing: "0.08em" }}>ВКонтакте</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                color: "rgba(220,200,255,0.8)",
-                fontSize: "clamp(6px, 0.75vw, 10px)",
-                fontFamily: "'Golos Text', sans-serif",
-              }}
-            >
-              <MaxIcon />
-              <span style={{ letterSpacing: "0.08em" }}>MAX</span>
-            </div>
-          </div>
-
-          {/* Логотип-монограмма */}
-          <div
-            style={{
-              width: "clamp(28px, 3.5vw, 44px)",
-              height: "clamp(28px, 3.5vw, 44px)",
-              borderRadius: "50%",
-              border: "1.5px solid rgba(200,160,255,0.5)",
-              background: "rgba(80,30,140,0.4)",
-              backdropFilter: "blur(8px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: "'Cormorant Garamond', serif",
-              fontStyle: "italic",
-              fontSize: "clamp(10px, 1.4vw, 18px)",
-              color: "rgba(230,210,255,0.9)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            СВ
+      {/* ───── ЦИТАТА ───── */}
+      <section style={{
+        padding: "70px 24px",
+        background: "linear-gradient(135deg, #3b0764, #1a0a2e)",
+        textAlign: "center",
+      }}>
+        <div style={{ maxWidth: 700, margin: "0 auto" }}>
+          <div style={{ fontSize: 48, color: "rgba(216,180,254,0.3)", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1, marginBottom: 16 }}>"</div>
+          <p style={{
+            fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic",
+            fontSize: 26, lineHeight: 1.6, color: "rgba(230,210,255,0.95)",
+            marginBottom: 20,
+          }}>
+            Образы говорят там, где слова молчат. МАК-карты открывают то, что уже знает душа.
+          </p>
+          <div style={{ fontSize: 13, letterSpacing: "0.15em", color: "rgba(255,218,80,0.7)", textTransform: "uppercase" }}>
+            Светлана Вознесенская
           </div>
         </div>
+      </section>
 
-        {/* Декоративные пятна */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            right: "20%",
-            width: "clamp(80px, 14vw, 200px)",
-            height: "clamp(80px, 14vw, 200px)",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(160,100,255,0.12) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-      </div>
+      {/* ───── ЗАПИСЬ ───── */}
+      <section id="contact" style={{ padding: "80px 24px", background: "#fff" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ fontSize: 12, letterSpacing: "0.2em", color: "#a855f7", textTransform: "uppercase", marginBottom: 12 }}>Начнём путь вместе</div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, fontWeight: 400, color: "#3b0764", marginBottom: 16 }}>
+            Записаться
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: "#6b5080", marginBottom: 40 }}>
+            Напишите мне в удобный мессенджер — отвечу в течение дня, обсудим формат и время.
+          </p>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href={WA_LINK} target="_blank" rel="noreferrer" className="btn-primary btn-wa" style={{ fontSize: 16, padding: "16px 36px" }}>
+              <span>💬</span> Написать в WhatsApp
+            </a>
+            <a href={MAX_LINK} target="_blank" rel="noreferrer" className="btn-primary btn-max" style={{ fontSize: 16, padding: "16px 36px" }}>
+              <span>📱</span> Написать в MAX
+            </a>
+          </div>
 
-      {/* Кнопка скачивания */}
-      <button
-        onClick={handleDownload}
-        disabled={loading}
-        style={{
-          marginTop: "28px",
-          padding: "14px 36px",
-          fontFamily: "'Golos Text', sans-serif",
-          fontWeight: 500,
-          fontSize: "15px",
-          letterSpacing: "0.06em",
-          color: "#fff",
-          background: loading
-            ? "rgba(120,80,200,0.4)"
-            : "linear-gradient(90deg, #7c3aed, #5b21b6)",
-          border: "none",
-          borderRadius: "8px",
-          cursor: loading ? "not-allowed" : "pointer",
-          boxShadow: "0 4px 20px rgba(120,60,200,0.35)",
-          transition: "opacity 0.2s",
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        {loading ? (
-          <>
-            <span style={{ display: "inline-block", width: "16px", height: "16px", border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-            Сохраняем…
-          </>
-        ) : (
-          <>
-            ↓ Скачать обложку PNG
-          </>
-        )}
-      </button>
+          <div style={{ marginTop: 48, padding: "28px 32px", borderRadius: 16, background: "linear-gradient(135deg, #faf5ff, #f5f0ff)", border: "1px solid rgba(124,58,237,0.1)" }}>
+            <p style={{ fontSize: 14, color: "#7c3aed", marginBottom: 6, fontWeight: 500 }}>🌿 Первая консультация</p>
+            <p style={{ fontSize: 15, lineHeight: 1.6, color: "#4c1d95" }}>Познакомимся, обсудим ваш запрос и я расскажу, какой формат работы подойдёт именно вам.</p>
+          </div>
+        </div>
+      </section>
 
-      {/* Подпись под обложкой */}
-      <div
-        style={{
-          marginTop: "16px",
-          display: "flex",
-          gap: "32px",
-          color: "#aaa",
-          fontSize: "12px",
-          fontFamily: "'Golos Text', sans-serif",
-        }}
-      >
-        <span>ПК: 1590 × 530 px</span>
-        <span>•</span>
-        <span>Мобильный: центральная область 1198 × 400 px</span>
-      </div>
+      {/* ───── ПОДВАЛ ───── */}
+      <footer style={{
+        padding: "32px 24px",
+        background: "#1a0a2e",
+        textAlign: "center",
+      }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: "rgba(216,180,254,0.8)", marginBottom: 8 }}>
+          Светлана Вознесенская
+        </div>
+        <div style={{ fontSize: 13, color: "rgba(200,180,255,0.4)", letterSpacing: "0.1em" }}>
+          Психолог • МАК-консультант • Трансформационные игры
+        </div>
+      </footer>
 
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
-};
-
-export default Index;
+}
