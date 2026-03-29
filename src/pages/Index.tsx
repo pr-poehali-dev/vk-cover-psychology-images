@@ -189,7 +189,7 @@ export default function Index() {
               <p style={{ fontSize: 16, lineHeight: 1.8, color: "#6b5080", marginBottom: 36 }}>
                 В своей практике я использую <strong>МАК-консультирование</strong> и <strong>психологические трансформационные игры</strong> — инструменты, которые помогают мягко, но глубоко исследовать себя, найти внутренние ресурсы и прийти к изменениям.
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, gridAutoRows: "auto" }}>
                 {benefits.map((b) => (
                   <div key={b.text} style={{
                     display: "flex", alignItems: "flex-start", gap: 12,
@@ -198,7 +198,7 @@ export default function Index() {
                     border: "1px solid rgba(124,58,237,0.1)",
                   }}>
                     <span style={{ fontSize: 22 }}>{b.icon}</span>
-                    <span style={{ fontSize: 14, lineHeight: 1.5, color: "#4c1d95", fontWeight: 400 }}>{b.text}</span>
+                    <span style={{ fontSize: 14, lineHeight: 1.5, color: "#4c1d95", fontWeight: 400, wordBreak: "break-word" }}>{b.text}</span>
                   </div>
                 ))}
               </div>
