@@ -5,7 +5,7 @@ const CARDS_IMG = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-3815
 const GAME_IMG = "https://cdn.poehali.dev/projects/d03c459d-bf81-4f8a-847a-381527135cb4/files/d89e2bb5-1289-4aad-9e4e-634101e5e1b9.jpg";
 
 const WA_LINK = "https://wa.me/79226599294";
-const MAX_LINK = "https://max.ru/";
+const MAX_LINK = "https://max.ru/u/f9LHodD0cOJC66-LsEZouEvQqbEDGp-2b9TKkDRJC-OTFyI3zRwP7sSrV4U";
 
 const services = [
   {
