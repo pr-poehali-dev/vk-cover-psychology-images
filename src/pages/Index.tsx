@@ -85,7 +85,7 @@ const Index = () => {
             top: "18%",
             bottom: "18%",
             width: "2px",
-            background: "linear-gradient(to bottom, transparent, rgba(210,180,255,0.7), transparent)",
+            background: "linear-gradient(to bottom, transparent, rgba(255,210,80,0.7), transparent)",
           }}
         />
 
@@ -106,7 +106,7 @@ const Index = () => {
               fontWeight: 300,
               fontSize: "clamp(9px, 1.1vw, 14px)",
               letterSpacing: "0.25em",
-              color: "rgba(210,190,255,0.85)",
+              color: "rgba(255,218,80,0.9)",
               textTransform: "uppercase",
               marginBottom: "10px",
             }}
@@ -178,9 +178,9 @@ const Index = () => {
               letterSpacing: "0.15em",
               textTransform: "uppercase",
               color: "#fff",
-              background: "linear-gradient(90deg, rgba(130,70,210,0.75), rgba(90,50,160,0.6))",
+              background: "linear-gradient(90deg, rgba(200,150,20,0.75), rgba(160,110,0,0.65))",
               backdropFilter: "blur(8px)",
-              border: "1px solid rgba(200,160,255,0.3)",
+              border: "1px solid rgba(255,218,80,0.4)",
               borderRadius: "4px",
               padding: "7px 16px",
               display: "inline-block",
